@@ -1,2 +1,1 @@
-# typescript-world-clock
-Individuell uppgift för TypeScript-kurs
+# TypeScript World Clock
