@@ -1,0 +1,266 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2023-11-15",
+  "timezones": [
+    {
+      "id": "america-new_york",
+      "name": "New York",
+      "country": "United States",
+      "timezone": "America/New_York",
+      "offset": "-05:00",
+      "dstOffset": "-04:00",
+      "coordinates": {
+        "lat": 40.7128,
+        "lng": -74.006
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "europe-london",
+      "name": "London",
+      "country": "United Kingdom",
+      "timezone": "Europe/London",
+      "offset": "+00:00",
+      "dstOffset": "+01:00",
+      "coordinates": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-tokyo",
+      "name": "Tokyo",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo",
+      "offset": "+09:00",
+      "dstOffset": "+09:00",
+      "coordinates": {
+        "lat": 35.6762,
+        "lng": 139.6503
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1494&q=80"
+    },
+    {
+      "id": "europe-paris",
+      "name": "Paris",
+      "country": "France",
+      "timezone": "Europe/Paris",
+      "offset": "+01:00",
+      "dstOffset": "+02:00",
+      "coordinates": {
+        "lat": 48.8566,
+        "lng": 2.3522
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80"
+    },
+    {
+      "id": "australia-sydney",
+      "name": "Sydney",
+      "country": "Australia",
+      "timezone": "Australia/Sydney",
+      "offset": "+10:00",
+      "dstOffset": "+11:00",
+      "coordinates": {
+        "lat": -33.8688,
+        "lng": 151.2093
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-dubai",
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "timezone": "Asia/Dubai",
+      "offset": "+04:00",
+      "dstOffset": "+04:00",
+      "coordinates": {
+        "lat": 25.276987,
+        "lng": 55.296249
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "america-los_angeles",
+      "name": "Los Angeles",
+      "country": "United States",
+      "timezone": "America/Los_Angeles",
+      "offset": "-08:00",
+      "dstOffset": "-07:00",
+      "coordinates": {
+        "lat": 34.0522,
+        "lng": -118.2437
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1515895309288-a3815ab7cf81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-shanghai",
+      "name": "Shanghai",
+      "country": "China",
+      "timezone": "Asia/Shanghai",
+      "offset": "+08:00",
+      "dstOffset": "+08:00",
+      "coordinates": {
+        "lat": 31.2304,
+        "lng": 121.4737
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "europe-berlin",
+      "name": "Berlin",
+      "country": "Germany",
+      "timezone": "Europe/Berlin",
+      "offset": "+01:00",
+      "dstOffset": "+02:00",
+      "coordinates": {
+        "lat": 52.52,
+        "lng": 13.405
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1560969184-10fe8719e047?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "america-chicago",
+      "name": "Chicago",
+      "country": "United States",
+      "timezone": "America/Chicago",
+      "offset": "-06:00",
+      "dstOffset": "-05:00",
+      "coordinates": {
+        "lat": 41.8781,
+        "lng": -87.6298
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-singapore",
+      "name": "Singapore",
+      "country": "Singapore",
+      "timezone": "Asia/Singapore",
+      "offset": "+08:00",
+      "dstOffset": "+08:00",
+      "coordinates": {
+        "lat": 1.3521,
+        "lng": 103.8198
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1622&q=80"
+    },
+    {
+      "id": "america-mexico_city",
+      "name": "Mexico City",
+      "country": "Mexico",
+      "timezone": "America/Mexico_City",
+      "offset": "-06:00",
+      "dstOffset": "-05:00",
+      "coordinates": {
+        "lat": 19.4326,
+        "lng": -99.1332
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1501&q=80"
+    },
+    {
+      "id": "africa-cairo",
+      "name": "Cairo",
+      "country": "Egypt",
+      "timezone": "Africa/Cairo",
+      "offset": "+02:00",
+      "dstOffset": "+02:00",
+      "coordinates": {
+        "lat": 30.0444,
+        "lng": 31.2357
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "europe-moscow",
+      "name": "Moscow",
+      "country": "Russia",
+      "timezone": "Europe/Moscow",
+      "offset": "+03:00",
+      "dstOffset": "+03:00",
+      "coordinates": {
+        "lat": 55.7558,
+        "lng": 37.6173
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1490&q=80"
+    },
+    {
+      "id": "asia-hong_kong",
+      "name": "Hong Kong",
+      "country": "Hong Kong",
+      "timezone": "Asia/Hong_Kong",
+      "offset": "+08:00",
+      "dstOffset": "+08:00",
+      "coordinates": {
+        "lat": 22.3193,
+        "lng": 114.1694
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1542052125323-1b3f9f4e7af0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80"
+    },
+    {
+      "id": "america-sao_paulo",
+      "name": "São Paulo",
+      "country": "Brazil",
+      "timezone": "America/Sao_Paulo",
+      "offset": "-03:00",
+      "dstOffset": "-03:00",
+      "coordinates": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1542603128-5b593c38d475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-seoul",
+      "name": "Seoul",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul",
+      "offset": "+09:00",
+      "dstOffset": "+09:00",
+      "coordinates": {
+        "lat": 37.5665,
+        "lng": 126.978
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1534274867514-d5b47ef89ed1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1465&q=80"
+    },
+    {
+      "id": "europe-rome",
+      "name": "Rome",
+      "country": "Italy",
+      "timezone": "Europe/Rome",
+      "offset": "+01:00",
+      "dstOffset": "+02:00",
+      "coordinates": {
+        "lat": 41.9028,
+        "lng": 12.4964
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1552832230-c0197047e8be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      "id": "asia-mumbai",
+      "name": "Mumbai",
+      "country": "India",
+      "timezone": "Asia/Kolkata",
+      "offset": "+05:30",
+      "dstOffset": "+05:30",
+      "coordinates": {
+        "lat": 19.076,
+        "lng": 72.8777
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1562979314-bee7453e911c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80"
+    },
+    {
+      "id": "canada-toronto",
+      "name": "Toronto",
+      "country": "Canada",
+      "timezone": "America/Toronto",
+      "offset": "-05:00",
+      "dstOffset": "-04:00",
+      "coordinates": {
+        "lat": 43.6532,
+        "lng": -79.3832
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1534237710431-e2fc698436d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80"
+    }
+  ]
+}

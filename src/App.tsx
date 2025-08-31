@@ -1,5 +1,13 @@
+import AnalogClock from "./components/Clock/AnalogClock";
+
 function App() {
-  return <h1>World Clock</h1>;
+  return (
+    <div className="wrapper">
+      <h1>World Clock</h1>
+
+      <AnalogClock />
+    </div>
+  );
 }
 
 export default App;
