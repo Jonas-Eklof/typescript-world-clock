@@ -1,15 +1,38 @@
 import React, { useState, useEffect } from "react";
 
-const AnalogClock: React.FC = () => {
-  const [time, setTime] = useState<Date>(new Date());
+interface AnalogClockProps {
+  timeZone: string;
+}
+
+const getTimeForZone = (timeZone: string): Date => {
+  const formatter = new Intl.DateTimeFormat("sv-SE", {
+    timeZone,
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+  const parts = formatter.formatToParts(new Date());
+
+  const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0");
+  const minute = parseInt(parts.find((p) => p.type === "minute")?.value || "0");
+  const second = parseInt(parts.find((p) => p.type === "second")?.value || "0");
+
+  const date = new Date();
+  date.setHours(hour, minute, second);
+  return date;
+};
+
+const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
+  const [time, setTime] = useState<Date>(getTimeForZone(timeZone));
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(new Date());
+      setTime(getTimeForZone(timeZone));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [timeZone]);
 
   // Beräkna rotation för varje visare
   const secondRotation = (time.getSeconds() / 60) * 360;
