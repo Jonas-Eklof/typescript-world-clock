@@ -1,41 +1,79 @@
-import { useState } from "react";
+// src/App.tsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import StartScreen from "./components/Main/StartScreen";
 import Modal from "./components/Modal/Modal";
 import CityPicker from "./components/CityPicker/CityPicker";
 import TimeCard from "./components/TimeCard/TimeCard";
+import CityDetail from "./pages/CityDetail";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import type { City } from "./types";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  // selectedCities: sparas i localStorage
+  const [selectedCities, setSelectedCities] = useLocalStorage<City[]>(
+    "wc.selectedCities",
+    []
+  );
 
-  const handleSelectCity = (timezone: string) => {
-    // Lägg bara till om den inte redan finns
-    if (!selectedCities.includes(timezone)) {
-      setSelectedCities([...selectedCities, timezone]);
+  const handleSelectCity = (city: City) => {
+    if (!selectedCities.some((c) => c.id === city.id)) {
+      setSelectedCities([...selectedCities, { ...city, mode: "analog" }]);
     }
     setIsModalOpen(false);
   };
 
+  const removeCity = (id: string) => {
+    setSelectedCities(selectedCities.filter((c) => c.id !== id));
+  };
+
+  const toggleMode = (id: string) => {
+    setSelectedCities((prev) =>
+      prev.map((city) =>
+        city.id === id
+          ? { ...city, mode: city.mode === "analog" ? "digital" : "analog" }
+          : city
+      )
+    );
+  };
+
   return (
-    <div className="wrapper">
-      <Header onAddCity={() => setIsModalOpen(true)} />
-      <main style={{ padding: "20px" }}>
-        {selectedCities.length === 0 && (
-          <StartScreen onAddCity={() => setIsModalOpen(true)} />
-        )}
+    <Router>
+      <div className="wrapper">
+        <Header onAddCity={() => setIsModalOpen(true)} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <main style={{ padding: 20 }}>
+                {selectedCities.length === 0 && (
+                  <StartScreen onAddCity={() => setIsModalOpen(true)} />
+                )}
 
-        <div className="timeGrid">
-          {selectedCities.map((city) => (
-            <TimeCard key={city} city={city} />
-          ))}
-        </div>
-      </main>
+                <div className="timeGrid">
+                  {selectedCities.map((city) => (
+                    <TimeCard
+                      key={city.id}
+                      city={city}
+                      mode={city.mode ?? "analog"}
+                      onRemove={removeCity}
+                      onToggleMode={toggleMode}
+                    />
+                  ))}
+                </div>
+              </main>
+            }
+          />
+          <Route path="/city/:id" element={<CityDetail />} />
+        </Routes>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CityPicker onSelect={handleSelectCity} />
-      </Modal>
-    </div>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <CityPicker onSelect={handleSelectCity} />
+        </Modal>
+      </div>
+    </Router>
   );
 }
 

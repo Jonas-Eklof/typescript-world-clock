@@ -18,6 +18,7 @@ export interface City {
   dstOffset?: string;
   coordinates?: { lat: number; lng: number };
   imageUrl?: string;
+  mode?: ClockMode;
 }
 
 export interface CityListFile {

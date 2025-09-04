@@ -1,5 +1,5 @@
 import React from "react";
-import { useTime } from "./useTime";
+import { useTime } from "../../hooks/useTime";
 
 interface DigitalClockProps {
   timeZone: string;

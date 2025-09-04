@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from "react";
+// src/components/Clock/AnalogClock.tsx
+import React from "react";
+import { useTime } from "../../hooks/useTime";
 
 interface AnalogClockProps {
   timeZone: string;
+  size?: number; // valfritt, px
 }
 
-const getTimeForZone = (timeZone: string): Date => {
-  const formatter = new Intl.DateTimeFormat("sv-SE", {
-    timeZone,
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  });
-  const parts = formatter.formatToParts(new Date());
-  const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0");
-  const minute = parseInt(parts.find((p) => p.type === "minute")?.value || "0");
-  const second = parseInt(parts.find((p) => p.type === "second")?.value || "0");
-
-  const date = new Date();
-  date.setHours(hour, minute, second);
-  return date;
-};
-
-const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
-  const [time, setTime] = useState<Date>(getTimeForZone(timeZone));
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(getTimeForZone(timeZone));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [timeZone]);
+const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone, size = 250 }) => {
+  const time = useTime(timeZone);
 
   const secondRotation = (time.getSeconds() / 60) * 360;
   const minuteRotation =
     (time.getMinutes() / 60) * 360 + (time.getSeconds() / 60) * 6;
   const hourRotation =
     (time.getHours() / 12) * 360 + (time.getMinutes() / 60) * 30;
+
+  const center = size / 2;
+  const radiusNumbers = size * 0.45; // placera siffror nära kanten
 
   return (
     <div
@@ -87,75 +68,44 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
           );
         })}
 
-        {/* Timsiffror */}
-        {/* {Array.from({ length: 12 }, (_, i) => {
-          const angle = i * 30 - 90; // Start vid toppen
-          const radius = 90; // Avstånd från centrum
-          const centerX = 65;
-          const centerY = 65;
-          const x = centerX + radius * Math.cos((angle * Math.PI) / 180);
-          const y = centerY + radius * Math.sin((angle * Math.PI) / 180);
-
-          return (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: `${x}px`,
-                top: `${y}px`,
-                transform: "translate(-50%, -50%)",
-                fontSize: "18px",
-                fontWeight: "bold",
-                color: "#2c3e50",
-              }}
-            >
-              {i === 0 ? 12 : i}
-            </div>
-          );
-        })} */}
-
-        {/* Timvisare */}
+        {/* Visare */}
         <div
           style={{
             position: "absolute",
-            top: "50%",
             left: "50%",
-            width: "5px",
-            height: "40px",
-            backgroundColor: "#2c3e50",
-            borderRadius: "10px",
+            top: "50%",
+            width: 5,
+            height: size * 0.14,
+            background: "#2c3e50",
             transform: `translate(-50%, -100%) rotate(${hourRotation}deg)`,
             transformOrigin: "bottom center",
+            borderRadius: 8,
           }}
         />
-
-        {/* Minutenvisare */}
         <div
           style={{
             position: "absolute",
-            top: "50%",
             left: "50%",
-            width: "4px",
-            height: "60px",
-            backgroundColor: "#34495e",
-            borderRadius: "10px",
+            top: "50%",
+            width: 4,
+            height: size * 0.24,
+            background: "#34495e",
             transform: `translate(-50%, -100%) rotate(${minuteRotation}deg)`,
             transformOrigin: "bottom center",
+            borderRadius: 6,
           }}
         />
-
-        {/* Sekundvisare */}
         <div
           style={{
             position: "absolute",
-            top: "50%",
             left: "50%",
-            width: "2px",
-            height: "60px",
-            backgroundColor: "#e74c3c",
-            borderRadius: "10px",
+            top: "50%",
+            width: 2,
+            height: size * 0.24,
+            background: "#e74c3c",
             transform: `translate(-50%, -100%) rotate(${secondRotation}deg)`,
             transformOrigin: "bottom center",
+            borderRadius: 2,
           }}
         />
 
@@ -163,11 +113,11 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
         <div
           style={{
             position: "absolute",
-            top: "50%",
             left: "50%",
-            width: "15px",
-            height: "15px",
-            backgroundColor: "#e74c3c",
+            top: "50%",
+            width: 14,
+            height: 14,
+            background: "#e74c3c",
             borderRadius: "50%",
             transform: "translate(-50%, -50%)",
           }}
