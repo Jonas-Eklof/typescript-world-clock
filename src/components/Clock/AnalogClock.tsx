@@ -13,7 +13,6 @@ const getTimeForZone = (timeZone: string): Date => {
     second: "numeric",
   });
   const parts = formatter.formatToParts(new Date());
-
   const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0");
   const minute = parseInt(parts.find((p) => p.type === "minute")?.value || "0");
   const second = parseInt(parts.find((p) => p.type === "second")?.value || "0");
@@ -30,11 +29,9 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
     const timer = setInterval(() => {
       setTime(getTimeForZone(timeZone));
     }, 1000);
-
     return () => clearInterval(timer);
   }, [timeZone]);
 
-  // Beräkna rotation för varje visare
   const secondRotation = (time.getSeconds() / 60) * 360;
   const minuteRotation =
     (time.getMinutes() / 60) * 360 + (time.getSeconds() / 60) * 6;
@@ -46,92 +43,76 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f5f5f5",
-        fontFamily: "Arial, sans-serif",
         padding: "20px",
       }}
     >
       <div
         style={{
           position: "relative",
-          width: "300px",
-          height: "300px",
+          width: "150px",
+          height: "150px",
           borderRadius: "50%",
           border: "10px solid #2c3e50",
           boxShadow: "0 0 20px rgba(0, 0, 0, 0.3)",
           backgroundColor: "white",
         }}
+        className="analog-clock"
       >
-        {/* Centreringscontainer för enklare positionering */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          {/* Timmarkeringar */}
-          {Array.from({ length: 60 }, (_, i) => {
-            const isHourMarker = i % 5 === 0;
-            const angle = i * 6;
-
-            return (
+        {/* Markeringar */}
+        {Array.from({ length: 60 }, (_, i) => {
+          const isHourMarker = i % 5 === 0;
+          const angle = i * 6;
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "50%",
+                height: "50%",
+                transformOrigin: "bottom center",
+                transform: `rotate(${angle}deg) translateX(-50%)`,
+              }}
+            >
               <div
-                key={i}
                 style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "49.3%",
-                  height: "50%",
-                  transformOrigin: "bottom center",
-                  transform: `rotate(${angle}deg) translateX(-50%)`,
+                  height: isHourMarker ? "20px" : "10px",
+                  width: isHourMarker ? "4px" : "2px",
+                  backgroundColor: isHourMarker ? "#2c3e50" : "#95a5a6",
                 }}
-              >
-                <div
-                  style={{
-                    height: isHourMarker ? "20px" : "10px",
-                    width: isHourMarker ? "4px" : "2px",
-                    backgroundColor: isHourMarker ? "#2c3e50" : "#95a5a6",
-                    marginTop: "5px",
-                  }}
-                />
-              </div>
-            );
-          })}
+              />
+            </div>
+          );
+        })}
 
-          {/* Timsiffror */}
-          {Array.from({ length: 12 }, (_, i) => {
-            const angle = i * 30 - 90; // -90 för att börja från toppen
-            const radius = 100; // Avstånd från centrum
-            const x = 150 + radius * Math.cos((angle * Math.PI) / 180);
-            const y = 150 + radius * Math.sin((angle * Math.PI) / 180);
+        {/* Timsiffror */}
+        {/* {Array.from({ length: 12 }, (_, i) => {
+          const angle = i * 30 - 90; // Start vid toppen
+          const radius = 90; // Avstånd från centrum
+          const centerX = 65;
+          const centerY = 65;
+          const x = centerX + radius * Math.cos((angle * Math.PI) / 180);
+          const y = centerY + radius * Math.sin((angle * Math.PI) / 180);
 
-            return (
-              <div
-                key={i}
-                style={{
-                  position: "absolute",
-                  left: `${x - 8}px`, // Justera för centrering
-                  top: `${y - 10}px`, // Justera för centrering
-                  width: "20px",
-                  height: "20px",
-                  textAlign: "center",
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                  color: "#2c3e50",
-                  transform: "translate(-50%, -50%)", // Centrera perfekt
-                }}
-              >
-                {i === 0 ? 12 : i}
-              </div>
-            );
-          })}
-        </div>
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: `${x}px`,
+                top: `${y}px`,
+                transform: "translate(-50%, -50%)",
+                fontSize: "18px",
+                fontWeight: "bold",
+                color: "#2c3e50",
+              }}
+            >
+              {i === 0 ? 12 : i}
+            </div>
+          );
+        })} */}
 
         {/* Timvisare */}
         <div
@@ -139,13 +120,12 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
             position: "absolute",
             top: "50%",
             left: "50%",
-            width: "8px",
-            height: "70px",
+            width: "5px",
+            height: "40px",
             backgroundColor: "#2c3e50",
             borderRadius: "10px",
-            transform: `translateX(-50%) translateY(-100%) rotate(${hourRotation}deg)`,
+            transform: `translate(-50%, -100%) rotate(${hourRotation}deg)`,
             transformOrigin: "bottom center",
-            zIndex: 10,
           }}
         />
 
@@ -155,13 +135,12 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
             position: "absolute",
             top: "50%",
             left: "50%",
-            width: "6px",
-            height: "100px",
+            width: "4px",
+            height: "60px",
             backgroundColor: "#34495e",
             borderRadius: "10px",
-            transform: `translateX(-50%) translateY(-100%) rotate(${minuteRotation}deg)`,
+            transform: `translate(-50%, -100%) rotate(${minuteRotation}deg)`,
             transformOrigin: "bottom center",
-            zIndex: 20,
           }}
         />
 
@@ -172,16 +151,15 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
             top: "50%",
             left: "50%",
             width: "2px",
-            height: "120px",
+            height: "60px",
             backgroundColor: "#e74c3c",
             borderRadius: "10px",
-            transform: `translateX(-50%) translateY(-100%) rotate(${secondRotation}deg)`,
+            transform: `translate(-50%, -100%) rotate(${secondRotation}deg)`,
             transformOrigin: "bottom center",
-            zIndex: 30,
           }}
         />
 
-        {/* Centrerad punkt */}
+        {/* Mittpunkt */}
         <div
           style={{
             position: "absolute",
@@ -192,34 +170,9 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ timeZone }) => {
             backgroundColor: "#e74c3c",
             borderRadius: "50%",
             transform: "translate(-50%, -50%)",
-            zIndex: 40,
           }}
         />
       </div>
-
-      <div
-        style={{
-          marginTop: "20px",
-          fontSize: "34px",
-          fontWeight: "bold",
-          color: "#2c3e50",
-          backgroundColor: "white",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        }}
-      >
-        {time.toLocaleTimeString("sv-SE")}
-      </div>
-
-      <div
-        style={{
-          marginTop: "20px",
-          textAlign: "center",
-          color: "#7f8c8d",
-          maxWidth: "500px",
-        }}
-      ></div>
     </div>
   );
 };
