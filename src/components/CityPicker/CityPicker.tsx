@@ -1,7 +1,7 @@
-// src/components/CityPicker/CityPicker.tsx
 import React, { useState } from "react";
 import timezonesData from "../../timezones.json";
 import type { City, TimeZoneString } from "../../types";
+import { isCity } from "../../utils/typeGuards";
 
 interface CityPickerProps {
   onSelect: (city: City) => void;
@@ -10,16 +10,17 @@ interface CityPickerProps {
 export default function CityPicker({ onSelect }: CityPickerProps) {
   const [query, setQuery] = useState("");
   const [customName, setCustomName] = useState("");
-  const [customTZ, setCustomTZ] = useState("");
-  const [useCustomTimeZone, setUseCustomTZ] = useState(false);
-  const [selectedTZ, setSelectedTZ] = useState("");
+  const [customTimeZone, setCustomTimeZone] = useState("");
+  const [useCustomTimeZone, setUseCustomTimeZone] = useState(false);
 
   const allCities = timezonesData.timezones as City[];
 
-  // Unika tidszoner (utan useMemo eftersom det är en enkel operation)
   const uniqueTimezones = Array.from(
     new Set(allCities.map((c) => c.timezone))
   ).sort();
+  const [selectedTimeZone, setSelectedTimeZone] = useState(
+    uniqueTimezones[0] || ""
+  );
 
   const filtered = allCities.filter(
     (c) =>
@@ -27,9 +28,9 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
       (c.country || "").toLowerCase().includes(query.toLowerCase())
   );
 
-  const isValidTimeZone = (tz: string) => {
+  const isValidTimeZone = (timezone: string) => {
     try {
-      Intl.DateTimeFormat("sv-SE", { timeZone: tz });
+      Intl.DateTimeFormat("sv-SE", { timeZone: timezone });
       return true;
     } catch {
       return false;
@@ -37,12 +38,14 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
   };
 
   const handleAddCustom = () => {
-    const tzToUse = useCustomTimeZone ? customTZ.trim() : selectedTZ;
+    const timezoneToUse = useCustomTimeZone
+      ? customTimeZone.trim()
+      : selectedTimeZone;
     const trimmedName = customName.trim();
 
     if (!trimmedName) return alert("Ange ett namn för staden.");
-    if (!tzToUse) return alert("Välj eller skriv en tidszon.");
-    if (!isValidTimeZone(tzToUse)) return alert("Ogiltig tidszon.");
+    if (!timezoneToUse) return alert("Välj eller skriv en tidszon.");
+    if (!isValidTimeZone(timezoneToUse)) return alert("Ogiltig tidszon.");
 
     const newCity: City = {
       id: `custom-${trimmedName
@@ -50,19 +53,23 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
         .replace(/\s+/g, "-")}-${Date.now()}`,
       name: trimmedName,
       country: "",
-      timezone: tzToUse as TimeZoneString,
+      timezone: timezoneToUse as TimeZoneString,
       imageUrl: undefined,
       mode: "analog",
     };
 
     const saved = JSON.parse(localStorage.getItem("customCities") || "[]");
-    localStorage.setItem("customCities", JSON.stringify([...saved, newCity]));
+    const validCities = saved.filter(isCity);
+    localStorage.setItem(
+      "customCities",
+      JSON.stringify([...validCities, newCity])
+    );
 
     onSelect(newCity);
     setCustomName("");
-    setCustomTZ("");
-    setUseCustomTZ(false);
-    setSelectedTZ(uniqueTimezones[0] ?? "");
+    setCustomTimeZone("");
+    setUseCustomTimeZone(false);
+    setSelectedTimeZone(uniqueTimezones[0] ?? "");
   };
 
   const handleInputChange =
@@ -94,12 +101,14 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
             ) : (
               <div
                 style={{
-                  width: 56,
+                  minWidth: 56,
                   height: 56,
                   borderRadius: 6,
                   background: "#eee",
                 }}
-              />
+              >
+                <h3>No image available</h3>
+              </div>
             )}
             <div>
               <div style={{ fontWeight: 700 }}>{city.name}</div>
@@ -125,22 +134,22 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
           Välj tidszon
         </label>
         <select
-          value={useCustomTimeZone ? "other" : selectedTZ}
+          value={useCustomTimeZone ? "other" : selectedTimeZone}
           onChange={(e) => {
             const val = e.target.value;
             if (val === "other") {
-              setUseCustomTZ(true);
-              setSelectedTZ("");
+              setUseCustomTimeZone(true);
+              setSelectedTimeZone("");
             } else {
-              setUseCustomTZ(false);
-              setSelectedTZ(val as TimeZoneString);
+              setUseCustomTimeZone(false);
+              setSelectedTimeZone(val as TimeZoneString);
             }
           }}
           style={{ width: "100%", padding: 8, marginBottom: 8 }}
         >
-          {uniqueTimezones.map((tz) => (
-            <option key={tz} value={tz}>
-              {tz}
+          {uniqueTimezones.map((timezone) => (
+            <option key={timezone} value={timezone}>
+              {timezone}
             </option>
           ))}
           <option value="other">Annan tidszon / Skriv själv...</option>
@@ -149,8 +158,8 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
         {useCustomTimeZone && (
           <input
             placeholder="Skriv tidszon, ex Europe/London"
-            value={customTZ}
-            onChange={handleInputChange(setCustomTZ)}
+            value={customTimeZone}
+            onChange={handleInputChange(setCustomTimeZone)}
             style={{ width: "100%", padding: 8, marginBottom: 8 }}
           />
         )}

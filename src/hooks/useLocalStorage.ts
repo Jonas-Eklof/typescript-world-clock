@@ -1,5 +1,5 @@
-// src/hooks/useLocalStorage.ts
 import { useState, useEffect } from "react";
+import { isCity } from "../utils/typeGuards";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [state, setState] = useState<T>(() => {
@@ -7,7 +7,15 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     if (!raw) return initialValue;
 
     try {
-      return JSON.parse(raw) as T;
+      const parsed = JSON.parse(raw) as T;
+
+      if (key === "wc.selectedCities" || key === "customCities") {
+        if (Array.isArray(parsed) && parsed.every(isCity)) {
+          return parsed;
+        }
+        return initialValue;
+      }
+      return parsed;
     } catch (error) {
       console.warn("useLocalStorage parse error", error);
       return initialValue;

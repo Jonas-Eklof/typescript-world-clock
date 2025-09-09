@@ -1,11 +1,10 @@
-// src/components/TimeCard/TimeCard.tsx
 import React from "react";
 import AnalogClock from "../Clock/AnalogClock";
 import DigitalClock from "../Clock/DigitalClock";
 import type { City } from "../../types";
 import { Link } from "react-router-dom";
 
-interface TimeCardProps {
+export interface TimeCardProps {
   city: City;
   mode: "analog" | "digital";
   onToggleMode: (id: string) => void;

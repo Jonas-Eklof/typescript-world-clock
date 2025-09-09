@@ -1,4 +1,3 @@
-// src/components/Clock/AnalogClock.tsx
 import React from "react";
 import { useTime } from "../../hooks/useTime";
 
