@@ -12,7 +12,6 @@ import type { City } from "./types";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  // selectedCities: sparas i localStorage
   const [selectedCities, setSelectedCities] = useLocalStorage<City[]>(
     "wc.selectedCities",
     []
@@ -39,16 +38,19 @@ function App() {
     );
   };
 
+  const hasCities = selectedCities.length > 0;
+
   return (
     <Router>
       <div className="wrapper">
         <Header onAddCity={() => setIsModalOpen(true)} />
+
         <Routes>
           <Route
             path="/"
             element={
-              <main style={{ padding: 20 }}>
-                {selectedCities.length === 0 && (
+              <main className="main-content">
+                {!hasCities && (
                   <StartScreen onAddCity={() => setIsModalOpen(true)} />
                 )}
 

@@ -21,10 +21,10 @@ const TimeCard: React.FC<TimeCardProps> = ({
   return (
     <div className="timeCard">
       <div>
-        <h3 style={{ margin: 0 }}>{city.name}</h3>
-        <p style={{ margin: "4px 0 10px", color: "#666" }}>{city.country}</p>
+        <h3>{city.name}</h3>
+        <p className="country-text">{city.country}</p>
 
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="clock-container">
           {mode === "analog" ? (
             <AnalogClock timeZone={city.timezone} size={200} />
           ) : (
@@ -33,28 +33,14 @@ const TimeCard: React.FC<TimeCardProps> = ({
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          justifyContent: "center",
-          marginTop: 12,
-        }}
-      >
+      <div className="timecard-buttons">
         <button className="btn" onClick={() => onToggleMode(city.id)}>
-          {mode === "analog" ? " Visa Digital" : "Visa Analog"}
+          {mode === "analog" ? "Visa Digital" : "Visa Analog"}
         </button>
-        <Link
-          to={`/city/${encodeURIComponent(city.id)}`}
-          style={{ textDecoration: "none" }}
-        >
+        <Link to={`/city/${encodeURIComponent(city.id)}`}>
           <button className="btn">Detalj</button>
         </Link>
-        <button
-          className="btn"
-          onClick={() => onRemove(city.id)}
-          style={{ background: "#ef4444" }}
-        >
+        <button className="btn remove-btn" onClick={() => onRemove(city.id)}>
           Ta bort
         </button>
       </div>

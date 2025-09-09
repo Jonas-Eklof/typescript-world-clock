@@ -7,13 +7,25 @@ export type TimeZoneString =
   | "Asia/Shanghai"
   | "Asia/Singapore"
   | "Asia/Dubai"
+  | "Australia/Sydney"
+  | "Pacific/Auckland"
+  | "Africa/Cairo"
+  | "Europe/Paris"
+  | "Europe/Berlin"
+  | "Europe/Madrid"
+  | "America/Chicago"
+  | "America/Toronto"
+  | "America/Sao_Paulo"
+  | "Africa/Johannesburg"
+  | "Asia/Seoul"
+  | "Asia/Mumbai"
   | string;
 
 export interface City {
-  id: string; // matchar id i timezone.json (ex "europe-london")
+  id: string;
   name: string;
   country?: string;
-  timezone: TimeZoneString;
+  timezone: TimeZoneString | string;
   offset?: string;
   dstOffset?: string;
   coordinates?: { lat: number; lng: number };
