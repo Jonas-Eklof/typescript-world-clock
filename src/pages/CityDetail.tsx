@@ -3,7 +3,7 @@ import timezonesData from "../timezones.json";
 import type { City, ClockMode } from "../types";
 import AnalogClock from "../components/Clock/AnalogClock";
 import DigitalClock from "../components/Clock/DigitalClock";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { isCity } from "../utils/typeGuards";
 
 export default function CityDetail() {
@@ -16,6 +16,31 @@ export default function CityDetail() {
   const allCities: City[] = [...timezonesData.timezones, ...customCities];
   const city = allCities.find((c) => c.id === id);
 
+  const timeDifference = useMemo(() => {
+    if (!city) return "";
+
+    try {
+      const now = new Date();
+      const localTimeString = now.toLocaleString("sv-SE");
+      const cityTimeString = now.toLocaleString("sv-SE", {
+        timeZone: city.timezone,
+      });
+
+      const localTime = new Date(localTimeString);
+      const cityTime = new Date(cityTimeString);
+
+      const diffMs = cityTime.getTime() - localTime.getTime();
+      const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+
+      if (diffHours === 0) return "Samma tid som dig";
+      return diffHours > 0
+        ? `+${diffHours} timmar framför din tid`
+        : `${Math.abs(diffHours)} timmar efter din tid`;
+    } catch (error) {
+      return "Kunde inte beräkna tidsskillnad";
+    }
+  }, [city]);
+
   if (!city) {
     return (
       <div>
@@ -24,7 +49,6 @@ export default function CityDetail() {
     );
   }
 
-  // Korrigerad villkorssats som hanterar undefined säkert
   const backgroundImage =
     city.imageUrl && city.imageUrl.length > 0
       ? city.imageUrl
@@ -50,13 +74,25 @@ export default function CityDetail() {
           {city.name}
           {city.country && `, ${city.country}`}
         </h1>
+
+        {city.coordinates && (
+          <div className="coordinates-info">
+            <p>
+              📍 Koordinater: {city.coordinates.lat.toFixed(4)}° N,{" "}
+              {city.coordinates.lng.toFixed(4)}° E
+            </p>
+          </div>
+        )}
+
+        <div className="time-difference-info">
+          <p>⏰ {timeDifference}</p>
+        </div>
+
         {clockMode === "analog" ? (
           <AnalogClock timeZone={city.timezone} size={250} />
         ) : (
           <DigitalClock timeZone={city.timezone} />
         )}
-
-        {/* <p>Tidsskillnaden är: {city.dstOffset}</p> */}
 
         <button
           className="btn"
