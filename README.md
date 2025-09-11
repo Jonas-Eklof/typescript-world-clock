@@ -10,6 +10,8 @@ Min tanke när jag skapade designen för applikationen var att göra den så sim
 Inga flashiga effekter eller färger som drar undan uppmärksamheten.
 [Skiss i figma](https://www.figma.com/design/KISlqnQu7GGQJLBUrt1dMY/World-Clock?node-id=0-1&t=rC8aZItIM7N4qQNY-1)
 
+---
+
 ### Hur har du valt att dela upp din applikation?
 
 Jag hade "_separation of concerns_" i åtanke när jag skapade min app för att göra den lätt att felsöka och underhålla.
@@ -31,6 +33,8 @@ Komponentuppdelning:
 
 **AnalogClock & DigitalClock**: Tidsvisningskomponenter
 
+---
+
 ### Funktioner utanför komponenter
 
 **useLocalStorage**: Custom hook för localStorage-hantering
@@ -40,6 +44,8 @@ Komponentuppdelning:
 **getTimeForZone**: Tidsberäkningsfunktion (ren logik)
 
 **typeGuards**: Validering av data från localStorage
+
+---
 
 ### Vilka typer och interfaces har du valt att lägga i egna filer för återanvändning?
 
@@ -55,6 +61,8 @@ export type ClockMode = "analog" | "digital"; // Union type
 **Typ-säkerhet**: Konsekvent användning i hela appen
 **Underhållbarhet**: Enkelt att uppdatera typer på ett ställe
 
+---
+
 ## Loggbok för TypeScript individuell uppgift - World Clock
 
 ### Dag 1
@@ -66,7 +74,7 @@ Skapade en "kanban" i github projects och lade till några user stories. Använd
 Skissade på design
 Hittade en Analog klocka gjort för React med Typescript som jag lade i en egen komponent.
 
-## Dag 3-5
+### Dag 3-5
 
 Började skapa applikationen så att den såg ut som min design.
 Skapade grundmässig kod så att det funkade att ta data från .JSON-fil och visa den informationen på sidan.
