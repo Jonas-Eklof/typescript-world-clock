@@ -1,4 +1,4 @@
-import ClockIcon from "../../assets/GrayClockIcon.svg";
+import ClockIcon from "../assets/GrayClockIcon.svg";
 
 export default function StartScreen({ onAddCity }: { onAddCity: () => void }) {
   return (

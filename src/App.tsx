@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import StartScreen from "./components/Main/StartScreen";
+import StartScreen from "./pages/StartScreen";
 import Modal from "./components/Modal/Modal";
 import CityPicker from "./components/CityPicker/CityPicker";
 import TimeCard from "./components/TimeCard/TimeCard";

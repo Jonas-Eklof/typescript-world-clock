@@ -31,7 +31,7 @@ Komponentuppdelning:
 
 **AnalogClock & DigitalClock**: Tidsvisningskomponenter
 
-#### Funktioner utanför komponenter
+### Funktioner utanför komponenter
 
 **useLocalStorage**: Custom hook för localStorage-hantering
 
@@ -41,7 +41,7 @@ Komponentuppdelning:
 
 **typeGuards**: Validering av data från localStorage
 
-#### Vilka typer och interfaces har du valt att lägga i egna filer för återanvändning?
+### Vilka typer och interfaces har du valt att lägga i egna filer för återanvändning?
 
 ```ts
 export type TimeZoneString = /*...*/; // String literal types
@@ -65,3 +65,9 @@ Skapade en "kanban" i github projects och lade till några user stories. Använd
 
 Skissade på design
 Hittade en Analog klocka gjort för React med Typescript som jag lade i en egen komponent.
+
+## Dag 3-5
+
+Började skapa applikationen så att den såg ut som min design.
+Skapade grundmässig kod så att det funkade att ta data från .JSON-fil och visa den informationen på sidan.
+Såg till så att klockan visades och att den visade rätt tid beroende på vald stad.
