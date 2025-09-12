@@ -1,4 +1,3 @@
-import React from "react";
 import AnalogClock from "../Clock/AnalogClock";
 import DigitalClock from "../Clock/DigitalClock";
 import type { City } from "../../types";

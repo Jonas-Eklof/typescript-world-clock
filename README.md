@@ -49,25 +49,73 @@ Komponentuppdelning:
 
 ### Vilka typer och interfaces har du valt att lägga i egna filer för återanvändning?
 
+**1. TimeZoneString - Union Type**
+
 ```ts
-export type TimeZoneString = /*...*/; // String literal types
-export interface City { /*...*/ }      // Stadsobjekt
-export interface CityListFile { /*...*/ } // JSON-filstruktur
-export type ClockMode = "analog" | "digital"; // Union type
+export type TimeZoneString =
+  | "Europe/Stockholm"
+  | "Europe/London"
+  | "America/New_York"
+  // ... (fler tidszoner)
+  | string;
 ```
 
-**Enkel import/export**: En central plats för alla typer
-**Undvika circular dependencies**: Komponenter importerar typer, inte tvärtom
-**Typ-säkerhet**: Konsekvent användning i hela appen
-**Underhållbarhet**: Enkelt att uppdatera typer på ett ställe
+Återanvändning: Används i City interface och CityPicker komponenten för att säkerställa giltiga tidszon-strängar.
+
+**2. City - Interface**
+
+```ts
+export interface City {
+  id: string;
+  name: string;
+  country?: string;
+  timezone: TimeZoneString;
+  offset?: string;
+  dstOffset?: string;
+  coordinates?: { lat: number; lng: number };
+  imageUrl?: string;
+  mode?: ClockMode;
+}
+```
+
+Återanvändning: Denna används i 5+ filer:
+
+- App.tsx - för selectedCities state
+- TimeCard.tsx - som props type
+- CityDetail.tsx - för city data
+- CityPicker.tsx - för skapande av nya städer
+- useLocalStorage.ts - generisk typing
+
+**3. StoredCity - Utility Type**
+
+```ts
+export type StoredCity = Omit<City, "coordinates" | "imageUrl">;
+```
+
+Återanvändning: Används för localStorage-lagring där koordinater och bilder inte sparas (i CityDetail.tsx och CityPicker.tsx).
+
+**4. ClockMode - Union Type**
+
+```ts
+export type ClockMode = "analog" | "digital";
+```
+
+Återanvändning: Används i CityDetail.tsx för state och i City interface.
+
+### Varför just dessa typer separerades:
+
+**Bra designval**:
+
+1. Centraliserad typhantering - Alla komponenter importerar från samma källa
+2. Konsistens - Samma City struktur överallt i applikationen
+3. Utility types - StoredCity visar smart användning av TypeScripts Omit
+4. Union types - ClockMode och TimeZoneString begränsar tillåtna värden
 
 ---
 
 ### TypeScript-fördelar jämfört med JavaScript
 
-1.
-
-**Typesäkerhet med interfaces och type definitions.**
+**1. Typesäkerhet med interfaces och type definitions.**
 
 ```ts
 export interface City {
@@ -89,11 +137,52 @@ export type ClockMode = "analog" | "digital";
 I JavaScript skulle dessa objekt vara "any"-typ utan struktur. TypeScript säkerställer att:
 
 - Alla City-objekt har rätt struktur
-- coordinates måste ha lat och lng som numbers
+- coordinates måste ha "lat" och "lng" som numbers
 - mode kan bara vara "analog" eller "digital"
-- Du får autocomplete och compile-time fel om du använder fel egenskaper
+- Man får autocomplete och compile-time fel om du använder fel egenskaper
 
-2.
+**2. Generiska hooks med typsäkerhet**
+
+```ts
+export function useLocalStorage<T>(key: string, initialValue: T) {
+  const [state, setState] = useState<T>(() => {
+    // ...
+  });
+
+  // Type assertion at end ensures correct tuple type
+  return [state, setState] as const;
+}
+```
+
+Den generiska <T>-typen gör att:
+
+- Hooken behåller typsäkerheten för alla datatyper
+- När man använder "useLocalStorage<City[]>" vet TypeScript att state är "City[] as const" säkerställer att returvärdet behandlas som en read only tuple
+- I JavaScript skulle man förlora all typinformation och få runtime-fel
+
+**3. Type Guards för runtime-validering**
+
+```ts
+export function isCity(obj: any): obj is City {
+  return (
+    obj &&
+    typeof obj.id === "string" &&
+    typeof obj.name === "string" &&
+    typeof obj.timezone === "string"
+  );
+}
+```
+
+Type guards kombinerar runtime-validering med compile-time typsäkerhet:
+
+- Validerar att okänd data (från localStorage/API) matchar City-interfacet
+- Efter isCity()-kontroll "vet" TypeScript att objektet är en City
+- I JavaScript skulle man bara ha runtime-kontroller utan typinformation
+- Används i CityDetail.tsx för att säkert filtrera lagrad data
+
+### Beskriv hur TypeScript transpileras till JavaScript i ditt projekt
+
+> I mitt Vite+React-projekt transpileras TypeScript till JavaScript i realtid under utveckling: TypeScript-kompilatorn analyserar din kod för typfel, sedan konverterar Vite (med esbuild) .tsx-filerna till ren JavaScript genom att ta bort all typinformation och TS-specifik syntax, samtidigt som den behåller JSX och modern JavaScript. I produktion optimeras koden ytterligare med tree-shaking och minifiering, men alla typer försvinner - de finns endast kvar som säkerhetsnät under utveckling.
 
 ---
 
