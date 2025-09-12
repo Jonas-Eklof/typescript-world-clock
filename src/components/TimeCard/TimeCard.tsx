@@ -11,12 +11,7 @@ export interface TimeCardProps {
   onRemove: (id: string) => void;
 }
 
-const TimeCard: React.FC<TimeCardProps> = ({
-  city,
-  mode,
-  onToggleMode,
-  onRemove,
-}) => {
+const TimeCard = ({ city, mode, onToggleMode, onRemove }: TimeCardProps) => {
   return (
     <div className="timeCard">
       <div>
@@ -36,7 +31,7 @@ const TimeCard: React.FC<TimeCardProps> = ({
         <button className="btn" onClick={() => onToggleMode(city.id)}>
           {mode === "analog" ? "Visa Digital" : "Visa Analog"}
         </button>
-        <Link to={`/city/${encodeURIComponent(city.id)}`}>
+        <Link to={`/city/${city.id}`}>
           <button className="btn">Detalj</button>
         </Link>
         <button className="btn remove-btn" onClick={() => onRemove(city.id)}>

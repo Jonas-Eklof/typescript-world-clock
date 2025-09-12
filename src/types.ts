@@ -33,24 +33,6 @@ export interface City {
   mode?: ClockMode;
 }
 
-export interface CityListFile {
-  version: string;
-  lastUpdated?: string;
-  timezones: City[];
-}
+export type StoredCity = Omit<City, "coordinates" | "imageUrl">;
 
 export type ClockMode = "analog" | "digital";
-
-// Utility types for form handling
-export type CityFormData = Pick<City, "name" | "timezone"> & {
-  customTimezone?: string;
-  useCustomTimezone: boolean;
-};
-
-export type CityFormErrors = Partial<Record<keyof CityFormData, string>>;
-
-// For partial update of city
-export type CityUpdate = Partial<Omit<City, "id">> & { id: string };
-
-// For localStorage optimization
-export type StoredCity = Omit<City, "coordinates" | "imageUrl">;

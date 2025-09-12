@@ -63,6 +63,40 @@ export type ClockMode = "analog" | "digital"; // Union type
 
 ---
 
+### TypeScript-fördelar jämfört med JavaScript
+
+1.
+
+**Typesäkerhet med interfaces och type definitions.**
+
+```ts
+export interface City {
+  id: string;
+  name: string;
+  country?: string;
+  timezone: TimeZoneString;
+  offset?: string;
+  dstOffset?: string;
+  coordinates?: { lat: number; lng: number };
+  imageUrl?: string;
+  mode?: ClockMode;
+}
+
+export type StoredCity = Omit<City, "coordinates" | "imageUrl">;
+export type ClockMode = "analog" | "digital";
+```
+
+I JavaScript skulle dessa objekt vara "any"-typ utan struktur. TypeScript säkerställer att:
+
+- Alla City-objekt har rätt struktur
+- coordinates måste ha lat och lng som numbers
+- mode kan bara vara "analog" eller "digital"
+- Du får autocomplete och compile-time fel om du använder fel egenskaper
+
+2.
+
+---
+
 ## Loggbok för TypeScript individuell uppgift - World Clock
 
 ### Dag 1
