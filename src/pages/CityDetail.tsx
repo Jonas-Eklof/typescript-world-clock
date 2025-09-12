@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import timezonesData from "../timezones.json";
-import type { City, ClockMode } from "../types";
+import type { City, ClockMode, StoredCity } from "../types";
 import AnalogClock from "../components/Clock/AnalogClock";
 import DigitalClock from "../components/Clock/DigitalClock";
 import { useState, useMemo } from "react";
@@ -10,12 +10,28 @@ export default function CityDetail() {
   const [clockMode, setClockMode] = useState<ClockMode>("analog");
   const { id } = useParams<{ id: string }>();
 
-  const customCities: City[] = JSON.parse(
+  // load all predefined cities from timezones.json
+  const allPredefinedCities = timezonesData.timezones as City[];
+
+  // loads custom cities stored in localStorage if there are any
+  // then filters them with a type guard to make sure they are valid city-objects
+  const storedCities: StoredCity[] = JSON.parse(
     localStorage.getItem("customCities") || "[]"
   ).filter(isCity);
-  const allCities: City[] = [...timezonesData.timezones, ...customCities];
+
+  // converts stored cities into full city-objects with coordinates and imageUrl set to undefined since they are not stored
+  const customCities: City[] = storedCities.map((storedCity) => ({
+    ...storedCity,
+    coordinates: undefined,
+    imageUrl: undefined,
+  }));
+
+  // merge the lists of predefined cities and custom cities
+  const allCities: City[] = [...allPredefinedCities, ...customCities];
   const city = allCities.find((c) => c.id === id);
 
+  // calculates the time difference between the users local time and the chosen citys time
+  // useMemo only recalculates when "city" is changed
   const timeDifference = useMemo(() => {
     if (!city) return "";
 
