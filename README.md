@@ -17,20 +17,14 @@ Inga flashiga effekter eller färger som drar undan uppmärksamheten.
 Jag hade "_separation of concerns_" i åtanke när jag skapade min app för att göra den lätt att felsöka och underhålla.
 
 Komponentuppdelning:
+
 **App**: Root-komponent, hanterar routing och global state
-
 **Header**: Navigering och "Lägg till stad"-knapp
-
 **StartScreen**: Välkomstskärm när inga städer är valda
-
 **Modal**: Återanvändbar modal-komponent
-
 **CityPicker**: Lista och sökning av städer
-
 **TimeCard**: Individuell stadsklocka (både analog/digital)
-
 **CityDetail**: Detaljvy för enskild stad
-
 **AnalogClock & DigitalClock**: Tidsvisningskomponenter
 
 ---
@@ -38,11 +32,8 @@ Komponentuppdelning:
 ### Funktioner utanför komponenter
 
 **useLocalStorage**: Custom hook för localStorage-hantering
-
 **useTime**: Custom hook för tidsuppdatering
-
 **getTimeForZone**: Tidsberäkningsfunktion (ren logik)
-
 **typeGuards**: Validering av data från localStorage
 
 ---
@@ -110,6 +101,14 @@ export type ClockMode = "analog" | "digital";
 2. Konsistens - Samma City struktur överallt i applikationen
 3. Utility types - StoredCity visar smart användning av TypeScripts Omit
 4. Union types - ClockMode och TimeZoneString begränsar tillåtna värden
+
+---
+
+### Hur gick tillväga när du använde Git, samt när du testade att programmet faktiskt fungerar som det ska?
+
+Jag hamnade lite i stunder där jag jobbade på utan att tänka på att använda git, så i början blev det att jag körde commits när jag blev klar för den arbetsstunden, sen ju längre in jag kom i projektet desto mer började jag köra commits och pusha upp till GitHub när jag blev färdig med mindre saker jag jobbade på, som t.ex. fixning av type guards och lite helper functions, justering av styling, och jobb med dokumentationen.
+
+Min testning av appen bestod av att testa den i browsern och se om den betedde sig som jag förväntade mig att den skulle göra, inspektera modulerna och kolla consolen i dev-tools så att jag inte hade några oväntade felmeddelanden.
 
 ---
 
@@ -204,3 +203,14 @@ Hittade en Analog klocka gjort för React med Typescript som jag lade i en egen 
 Började skapa applikationen så att den såg ut som min design.
 Skapade grundmässig kod så att det funkade att ta data från .JSON-fil och visa den informationen på sidan.
 Såg till så att klockan visades och att den visade rätt tid beroende på vald stad.
+
+### Dag 6-8
+
+Implementerade mer funktionalitet, som t.ex. att med en knapp kunna ändra mellan analog och digital klocka, dropdown-meny med alla förbestämda städer.
+Skapade en detaljvy så att man kunde gå in på en av ens valda städer, att URL:en anpassades efter stadens id och att varje förbestämd stad hade en passande bakgrund, och att en "custom" stad får en "default"-bakgrund.
+
+### Dag 9-10
+
+Implementerade lite helper functions och type guards för att uppfylla kraven för uppgiften.
+Förbättrade koden genom att tänka på DRY (Dont repeat yourself), så rensade upp lite kod som gjorde samma sak och slog ihop dem så gott det gick med min nuvarande kunskap.
+Gjorde finjusteringar i styling för klockan som hade lite underligt beteende.
