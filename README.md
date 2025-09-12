@@ -18,23 +18,23 @@ Jag hade "_separation of concerns_" i åtanke när jag skapade min app för att 
 
 Komponentuppdelning:
 
-**App**: Root-komponent, hanterar routing och global state
-**Header**: Navigering och "Lägg till stad"-knapp
-**StartScreen**: Välkomstskärm när inga städer är valda
-**Modal**: Återanvändbar modal-komponent
-**CityPicker**: Lista och sökning av städer
-**TimeCard**: Individuell stadsklocka (både analog/digital)
-**CityDetail**: Detaljvy för enskild stad
-**AnalogClock & DigitalClock**: Tidsvisningskomponenter
+- **App**: Root-komponent, hanterar routing och global state
+- **Header**: Navigering och "Lägg till stad"-knapp
+- **StartScreen**: Välkomstskärm när inga städer är valda
+- **Modal**: Återanvändbar modal-komponent
+- **CityPicker**: Lista och sökning av städer
+- **TimeCard**: Individuell stadsklocka (både analog/digital)
+- **CityDetail**: Detaljvy för enskild stad
+- **AnalogClock & DigitalClock**: Tidsvisningskomponenter
 
 ---
 
 ### Funktioner utanför komponenter
 
-**useLocalStorage**: Custom hook för localStorage-hantering
-**useTime**: Custom hook för tidsuppdatering
-**getTimeForZone**: Tidsberäkningsfunktion (ren logik)
-**typeGuards**: Validering av data från localStorage
+- **useLocalStorage**: Custom hook för localStorage-hantering
+- **useTime**: Custom hook för tidsuppdatering
+- **getTimeForZone**: Tidsberäkningsfunktion (ren logik)
+- **typeGuards**: Validering av data från localStorage
 
 ---
 
