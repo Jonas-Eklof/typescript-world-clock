@@ -182,7 +182,7 @@ Type guards kombinerar runtime-validering med compile-time typsäkerhet:
 
 ### Beskriv hur TypeScript transpileras till JavaScript i ditt projekt
 
-> I mitt Vite+React-projekt transpileras TypeScript till JavaScript i realtid under utveckling: TypeScript-kompilatorn analyserar din kod för typfel, sedan konverterar Vite (med esbuild) .tsx-filerna till ren JavaScript genom att ta bort all typinformation och TS-specifik syntax, samtidigt som den behåller JSX och modern JavaScript. I produktion optimeras koden ytterligare med tree-shaking och minifiering, men alla typer försvinner - de finns endast kvar som säkerhetsnät under utveckling.
+I mitt Vite+React-projekt transpileras TypeScript till JavaScript i realtid under utveckling: TypeScript-kompilatorn analyserar din kod för typfel, sedan konverterar Vite (med esbuild) .tsx-filerna till ren JavaScript genom att ta bort all typinformation och TS-specifik syntax, samtidigt som den behåller JSX och modern JavaScript. I produktion optimeras koden ytterligare med tree-shaking och minifiering, men alla typer försvinner - de finns endast kvar som säkerhetsnät under utveckling.
 
 ---
 
