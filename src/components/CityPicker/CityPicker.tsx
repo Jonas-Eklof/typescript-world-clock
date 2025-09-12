@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import timezonesData from "../../timezones.json";
-import type { City, TimeZoneString } from "../../types";
+import type { City, TimeZoneString, StoredCity } from "../../types";
 import { isCity } from "../../utils/typeGuards";
 
 interface CityPickerProps {
@@ -18,6 +18,7 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
   const uniqueTimezones = Array.from(
     new Set(allCities.map((c) => c.timezone))
   ).sort();
+
   const [selectedTimeZone, setSelectedTimeZone] = useState(
     uniqueTimezones[0] || ""
   );
@@ -28,6 +29,7 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
       (c.country || "").toLowerCase().includes(query.toLowerCase())
   );
 
+  // helper function that validates if a given timezone-string is valid
   const isValidTimeZone = (timezone: string) => {
     try {
       Intl.DateTimeFormat("sv-SE", { timeZone: timezone });
@@ -58,13 +60,24 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
       mode: "analog",
     };
 
+    // load the stored cities and filter them with a type guard
     const saved = JSON.parse(localStorage.getItem("customCities") || "[]");
     const validCities = saved.filter(isCity);
+
+    const cityToStore: StoredCity = {
+      id: newCity.id,
+      name: newCity.name,
+      country: newCity.country,
+      timezone: newCity.timezone,
+      mode: newCity.mode,
+    };
+
     localStorage.setItem(
       "customCities",
-      JSON.stringify([...validCities, newCity])
+      JSON.stringify([...validCities, cityToStore])
     );
 
+    // reset input fields
     onSelect(newCity);
     setCustomName("");
     setCustomTimeZone("");
@@ -72,6 +85,7 @@ export default function CityPicker({ onSelect }: CityPickerProps) {
     setSelectedTimeZone(uniqueTimezones[0] ?? "");
   };
 
+  // utility for creating change handlers for all inputs without repeating the code
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
     (e: React.ChangeEvent<HTMLInputElement>) =>
